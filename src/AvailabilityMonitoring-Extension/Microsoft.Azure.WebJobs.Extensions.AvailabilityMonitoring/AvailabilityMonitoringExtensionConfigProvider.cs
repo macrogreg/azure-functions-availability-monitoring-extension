@@ -33,9 +33,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AvailabilityMonitoring
             FluentBindingRule<AvailabilityTestAttribute> rule = context.AddBindingRule<AvailabilityTestAttribute>();
 #pragma warning restore CS0618 
 
-            rule.BindToInput<AvailabilityTestInvocation>(CreateAvailabilityTestInvocation);
-            rule.BindToInput<AvailabilityTelemetry>(CreateAvailabilityTelemetry);
-            rule.BindToInput<JObject>(CreateJObject);
+            var availabilityTestBindingProvider = new AvailabilityTestBindingProvider();
+            rule.Bind(availabilityTestBindingProvider);
         }
 
         private static Task<AvailabilityTestInvocation> CreateAvailabilityTestInvocation(AvailabilityTestAttribute attribute, ValueBindingContext context)
